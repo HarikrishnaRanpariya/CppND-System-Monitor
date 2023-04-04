@@ -16,6 +16,7 @@ using std::vector;
 
 #define UTIME_ROW_INDEX       14 //#14 utime - CPU time spent in user code, measured in clock ticks
 #define STARTTIME_ROW_INDEX   22
+#define MAX_STR_SIZE          40
 
 int Process::Pid() { return this->p_pid; }
 
@@ -50,11 +51,18 @@ string Process::Ram() const {
   return  LinuxParser::Ram(this->p_pid);
 }
 
-string Process::Command() { 
-  return  LinuxParser::Command(this->p_pid); 
+string Process::Command() {
+  string cmdStr =   LinuxParser::Command(this->p_pid);
+  if (cmdStr.size() > MAX_STR_SIZE)
+  {
+      cmdStr.resize (MAX_STR_SIZE);
+      cmdStr.resize (MAX_STR_SIZE+3,'.');
+  }
+
+  return cmdStr;
 }
 
-string Process::User() { 
+string Process::User() {
   this->p_user_name =  LinuxParser::User(this->p_pid);
 
   return this->p_user_name;
@@ -64,11 +72,6 @@ Process::Process(std::string t_path) {
   this->p_pid = stoi(t_path);
   this->path = LinuxParser::kProcDirectory + t_path+"//";
 }
-bool Process::operator<(Process const& a) const { 
-  if(this->CpuUtilization() < a.CpuUtilization()) {
-    return true; 
-  }
-  else {
-    return false;
-  }
+bool Process::operator<(Process const& a) const {
+  return (this->CpuUtilization() < a.CpuUtilization());
 }
