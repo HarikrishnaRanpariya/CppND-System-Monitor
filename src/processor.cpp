@@ -6,16 +6,16 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-// TODO: Return the aggregate CPU utilization
+
 float Processor::Utilization() { 
  // NonIdle = user + nice + system + irq + softirq + steal
-  float active_time = LinuxParser::ActiveJiffies();
+  float activeTime = LinuxParser::ActiveJiffies();
   // Idle = idle + iowait
-  float idle_time = LinuxParser::IdleJiffies();
+  float idleTime = LinuxParser::IdleJiffies();
   // Total = Idle + NonIdle
   // CPU_Percentage = (Total - idled)/totald
-  if ((active_time + idle_time) == 0) {
+  if ((activeTime + idleTime) == 0) {
     return 0.0;
   }
-  return (active_time / (active_time + idle_time));
+  return (activeTime / (activeTime + idleTime));
 }
