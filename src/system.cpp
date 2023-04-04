@@ -16,10 +16,6 @@
 #include "system.h"
 
 using namespace std; 
-using std::set;
-using std::size_t;
-using std::string;
-using std::vector;
 
 #define OS_NAME_LINE_NUM     5
 #define KERNEL_VERSION_NUM   3
@@ -37,41 +33,10 @@ bool myfunction (Process i,Process j) { return (i<j); }
 
 vector<Process>& System::Processes() { 
    
-//     DIR *dir_ptr;
-//     struct dirent *diread;
-//     vector<char *> filenames;
-//     if ((dir_ptr = opendir("//proc//")) != nullptr)
-//     {
-//         while ((diread = readdir(dir_ptr)) != nullptr) 
-//         {
-//             filenames.push_back(diread->d_name);
-//             // Defining a regular expression.
-//               string s = diread->d_name;
-//             std::regex r("\\s+");
-
-//             // Using the regular expression to remove whitespaces.
-//             s = std::regex_replace(s, r, "");
-//             if(!s.empty() && std::find_if(s.begin(), s.end(), [](unsigned char c) { return !std::isdigit(c); }) == s.end())
-//             {    
-//               //std::cout<<" filename = "<<s ;
-//               Process tmp(s);
-//              pProc.push_back(tmp);
-//             }
-//         }
-//         closedir(dir_ptr);
-//         std::cout <<"\n";
-//     }
-//       else 
-//     {
-//         perror("fail");
-//         return pProc;
-//     }
-
   vector<int> pids = LinuxParser::Pids();
   
   for(int i : pids) {
-     Process tmp(to_string(i));
-     pProc.push_back(tmp);
+     pProc.emplace_back(to_string(i));
   }
   std::sort (pProc.begin(), pProc.end(), myfunction);
     
