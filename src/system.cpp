@@ -21,7 +21,6 @@ using namespace std;
 #define KERNEL_VERSION_NUM   3
 
 static vector<Process> pProc;
-static Processor pProcessor;
 
 /*You need to complete the mentioned TODOs in order to satisfy the rubric criteria "The student will be able to extract and display basic data about the system."
 

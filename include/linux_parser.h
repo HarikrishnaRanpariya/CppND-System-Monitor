@@ -18,6 +18,10 @@ const std::string kVersionFilename{"/version"};
 const std::string kOSPath{"/etc/os-release"};
 const std::string kPasswordPath{"/etc/passwd"};
 
+const std::string kProcessRunning{"procs_running"};
+const std::string kProcess{"processes"};
+const std::string kPrettyName{"PRETTY_NAME"};
+
 // System
 float MemoryUtilization();
 long UpTime();

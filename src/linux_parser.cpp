@@ -37,7 +37,7 @@ string LinuxParser::OperatingSystem() {
       std::istringstream linestream(line);
 
       while (linestream >> key >> value) {
-        if (key == "PRETTY_NAME") {
+        if (key.compare(kPrettyName) == 0) {
           std::replace(value.begin(), value.end(), '_', ' ');
           return value;
         }
@@ -248,7 +248,7 @@ int LinuxParser::TotalProcesses() {
   if(statFile.is_open()) {
     while(!statFile.eof()) {
         getline(statFile, totalProcesses, ' ');
-        if(totalProcesses.compare("processes") == 0) break;
+        if(totalProcesses.compare(kProcess) == 0) break;
 
         getline(statFile, totalProcesses);
     }
@@ -268,7 +268,7 @@ int LinuxParser::RunningProcesses() {
     while(!statFile.eof()) {
         getline(statFile, procsRunning, ' ');
 
-        if(procsRunning.compare("procs_running") == 0) break;
+        if(procsRunning.compare(kProcessRunning) == 0) break;
 
         getline(statFile, procsRunning);
     }
